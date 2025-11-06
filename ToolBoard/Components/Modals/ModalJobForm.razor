@@ -1,0 +1,49 @@
+﻿@if (IsVisible)
+{
+    <div class="modal-backdrop fade show position-fixed w-100 h-100"></div>
+
+    <div class="modal fade show d-flex justify-content-center" tabindex="-1" role="dialog" aria-labelledby="modalTitle">
+        <div class="modal-dialog modal-dialog-centered" style="width:300px" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Работа</h5>
+                    <button type="button" class="btn-close" aria-label="Close" @onclick="Close"></button>
+                </div>
+                <EditForm Model="Job" OnValidSubmit="AddJobAsync" autocomplete="off">
+                    <DataAnnotationsValidator />
+                    <div class="modal-body">
+                        <div class="form-group mb-2">
+                            <label>Название работы:</label>
+                            <ValidationMessage For="@(()=>Job.Name)" />
+                            <InputText class="form-control" Placeholder="Название работы"
+                                       @bind-Value="Job.Name" />
+                        </div>
+                        <div class="form-group mb-2">
+                            <label>Конструкция скважины:</label>
+                            <ValidationMessage For="@(()=>Job.Type)" />
+                            <InputSelect class="form-select" @bind-Value="Job.Type">
+                                <option value="ННС">ННС</option>
+                                <option value="ГС4КК">ГС4КК</option>
+                                <option value="ГС3КК">ГС3КК</option>
+                                <option value="ГС2КК">ГС2КК</option>
+                                <option value="ННСТК">ННСТК</option>
+                                <option value="ННСДК">ННСДК</option>
+                                <option value="ЗБСННС">ЗБСННС</option>
+                                <option value="ЗБСГС">ЗБСГС</option>
+                            </InputSelect>
+                        </div>
+                        <div class="form-group mb-2">
+                            <label>Номер партии:</label>
+                            <InputText class="form-control" Placeholder="Название работы"
+                                       @bind-Value="Job.FieldTeam" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" @onclick="Close">Отмена</button>
+                        <button type="submit" class="btn btn-primary">Добавить</button>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+}

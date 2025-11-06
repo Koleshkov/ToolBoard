@@ -1,0 +1,15 @@
+﻿<nav class="navbar navbar-dark bg-dark fixed-top d-flex justify-content-between flex-nowrap">
+    <div class="container-fluid">
+        <div class="d-flex flex-start">
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand ms-3 d-none d-sm-inline-block" href="#">ToolBoard</a>
+        </div>
+        <input class="form-control w-25" type="search" placeholder="Поиск" aria-label="Search" @bind="SearchText" @bind:event="oninput" />
+        <button class="btn btn-outline-light me-3" @onclick="OnClickAddJobButtonHandler">
+            <i class="fa-solid fa-plus me-2"></i>Добавить
+        </button>
+
+    </div>
+</nav>

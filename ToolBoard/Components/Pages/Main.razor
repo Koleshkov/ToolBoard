@@ -1,0 +1,103 @@
+﻿@page "/{boardId?}"
+@using ToolBoard.Components
+@using ToolBoard.Data.Entities.Enums
+@using ToolBoard.Data.Entities
+
+<SideBar @bind-IsVisible="showSideBar" @bind-SelectedBoardId="BoardId" OnUpdateJobList="UpdateJobListAsync" />
+
+<nav class="navbar navbar-dark bg-dark fixed-top p-0 shadow-sm">
+    <div class="container-fluid d-flex align-items-stretch" style="min-height: 56px;">
+        <div class="d-flex flex-start align-self-center m-0 p-0">
+            <button class="btn btn-outline-light" @onclick="() => { showSideBar = true; }">
+                <i class="fas fa-bars"></i>
+            </button>
+            <a class="navbar-brand ms-3 d-none d-sm-inline-block" href="#">ToolBoard</a>
+        </div>
+        @if (BoardId != null)
+        {
+            <div class="d-flex flex-grow-1 align-self-center" style="max-width: 500px;">
+                <input class="form-control ms-1 me-1"
+                       type="search"
+                       placeholder="Поиск"
+                       aria-label="Search"
+                       @bind="searchText"
+                       @bind:after="FilterItems" />
+            </div>
+
+            <div class="d-flex align-items-center">
+                <button class="btn btn-outline-light"
+                        @onclick="() => { showJobModal = true; newJob = new Job(); }">
+                    <i class="fas fa-plus"></i>
+                </button>
+                <button class="btn btn-outline-light ms-1"
+                        @onclick="() => { showSettingsModal = true; }">
+                    <i class="fas fa-gear"></i>
+                </button>
+            </div>
+        }
+    </div>
+</nav>
+
+<div class="d-flex flex-wrap justify-content-center" style="margin-top:60px">
+
+    @foreach (var job in filteredJobs)
+    {
+        <Card Job="job"
+              OnDeleteJob="()=>RemoveJobAsync(job.Id)"
+              OnAddToolSticker="()=>{showToolStickerModal=true; newJob=job;}"
+              OnAddSurfaceSticker="()=>{showSurfaceStickerModal=true; newJob=job;}"
+              OnEditJob="()=>{showJobModal=true;newJob=job;}"
+              OnUpdateJobList="UpdateJobListAsync">
+            <ChildContent>
+                <Dropzone Items="job.ToolStickers" TItem="ToolSticker" Class="m-0 p-0 dropzone-toolstickers d-flex flex-column justify-content-start align-items-start flex-wrap" OnItemDrop="(p) => ReplacedToolStickerDrop(p)">
+                    <div class="dropdown">
+                        <button class="btn btn-outline-@context.Color m-1 text-wrap text-start lh-1 p-1 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            @context.Name
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <button class="dropdown-item" @onclick="() => { showToolStickerModal = true; newJob = job; newToolSticker = context; }">
+                                    <i class="fas fa-pen-to-square me-2"></i>Изменить
+                                </button>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <button class="dropdown-item text-danger" @onclick="() => RemoveToolStickerAsync(job, context)">
+                                    <i class="fas fa-trash me-2"></i>Удалить
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </Dropzone>
+                <hr class="m-0 p-0">
+                <Dropzone Items="job.SurfaceStickers" TItem="SurfaceSticker" Class="dropzone-surfacestickers d-flex flex-row justify-content-end flex-wrap" OnItemDrop="(p) => ReplacedSurfaceStickerDrop(p)">
+                    <div class="dropdown">
+                        <button class="btn btn-@context.Color m-1 text-wrap text-start lh-1 p-1 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            @context.Name
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <button class="dropdown-item" @onclick="() => { showSurfaceStickerModal = true; newJob = job; newSurfaceSticker = context; }">
+                                    <i class="fas fa-pen-to-square me-2"></i>Изменить
+                                </button>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <button class="dropdown-item text-danger" @onclick="() => RemoveSurfaceStickerAsync(job, context)">
+                                    <i class="fas fa-trash me-2"></i>Удалить
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </Dropzone>
+            </ChildContent>
+        </Card>
+    }
+</div>
+
+<ModalJobForm @bind-IsVisible="showJobModal" @bind-Job="newJob" @bind-BoardId="BoardId" OnUpdateJobList="UpdateJobListAsync" />
+<ModalToolStickerForm @bind-IsVisible="showToolStickerModal" @bind-Job="newJob" @bind-ToolSticker="newToolSticker" OnUpdateJobList="UpdateJobListAsync" />
+<ModalSurfaceStickerForm @bind-IsVisible="showSurfaceStickerModal" @bind-Job="newJob" @bind-SurfaceSticker="newSurfaceSticker" OnUpdateJobList="UpdateJobListAsync" />
+<ModalSettingsForm @bind-IsVisible="showSettingsModal" @bind-BoardId="BoardId" OnUpdateJobList="UpdateJobListAsync" />
+
+

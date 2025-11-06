@@ -1,0 +1,9 @@
+﻿.dropzone-toolstickers {
+    height: 150px; /* or use fixed px value like 300px */
+    max-height: 150px;
+}
+
+.dropzone-surfacestickers {
+    height: 100px; /* or use fixed px value like 100px */
+    max-height: 100px;
+}

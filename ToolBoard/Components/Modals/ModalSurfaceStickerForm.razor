@@ -1,0 +1,47 @@
+﻿@using ToolBoard.Data.Entities.Enums
+@if (IsVisible)
+{
+    <div class="modal-backdrop fade show position-fixed w-100 h-100"></div>
+
+    <div class="modal fade show d-flex justify-content-center" tabindex="-1" role="dialog" aria-labelledby="modalTitle">
+        <div class="modal-dialog modal-dialog-centered" style="width:300px" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">НКС</h5>
+                    <button type="button" class="btn-close" aria-label="Close" @onclick="Close"></button>
+                </div>
+
+                <EditForm Model="SurfaceSticker" OnValidSubmit="AddSurfaceStickerAsync" autocomplete="off">
+                    <DataAnnotationsValidator />
+
+                    <div class="modal-body">
+
+                        <div class="form-group mb-2">
+                            <label>Название:</label>
+                            <ValidationMessage For="@(()=>SurfaceSticker.Name)" />
+                            <InputText class="form-control" Placeholder="Нименование"
+                                       @bind-Value="SurfaceSticker.Name" />
+                        </div>
+
+                        <div class="mb-2">
+                            <label class="form-label">Цвет:</label>
+                            <InputSelect class="form-select" @bind-Value="@SurfaceSticker.Color">
+                                <option class="text-primary" value="primary">Синий</option>
+                                <option class="text-success" value="success">Зеленый</option>
+                                <option class="text-danger" value="danger">Красный</option>
+                                <option class="text-purple" value="purple">Фиолетовый</option>
+                                <option class="text-warning" value="warning">Желтый</option>
+                                <option class="text-dark" value="dark">Черный</option>
+                            </InputSelect>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" @onclick="Close">Отмена</button>
+                        <button type="submit" class="btn btn-primary">Добавить</button>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+}

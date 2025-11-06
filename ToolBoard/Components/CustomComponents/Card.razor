@@ -1,0 +1,74 @@
+﻿@using ToolBoard.Data.Entities.Enums
+@using ToolBoard.Data.Entities
+<div class="card m-1 p-1 shadow-sm" style="width: 260px; height:540px">
+    <div class="d-flex flex-column justify-content-center align-items-center">
+        <a class="nav-link dropdown-toggle fw-bold text-wrap text-break"
+           href="#"
+           role="button"
+           data-bs-toggle="dropdown"
+           aria-expanded="false"
+           style="max-width: 240px; white-space: normal; text-align:center">
+            @Job.Name
+        </a>
+        <p class="m-0">ПП №@Job.FieldTeam/@Job.Type</p>
+        <input class="form-control mb-1 p-0 border-0 text-center" Placeholder="Конструкция"
+               @bind="Job.Phone"
+               @bind:after="()=>Update(Job)" />
+        <hr class="dropdown-divider">
+        <ul class="dropdown-menu">
+            <li>
+                <button class="dropdown-item" @onclick="OnAddToolHandler">
+                    <i class="fas fa-plus me-2"></i>Трубное
+                </button>
+            </li>
+            <li>
+                <button class="dropdown-item" @onclick="OnAddSurfaceHandler">
+                    <i class="fas fa-plus me-2"></i>НКС
+                </button>
+            </li>
+            <li>
+                <button class="dropdown-item" @onclick="OnEditHandler">
+                    <i class="fas fa-pen-to-square me-2"></i>Изменить
+                </button>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+                <button class="dropdown-item text-danger" @onclick="OnDeleteHandler">
+                    <i class="fas fa-trash me-2"></i>Удалить
+                </button>
+            </li>
+        </ul>
+    </div>
+    <div class="card-body p-0  d-flex flex-column">
+        <div class="m-0 p-0">
+            <div class="list-group-item d-flex align-items-center justify-content-between p-0 m-0 hover-bg-light">
+                <input class="form-control fw-bold m-0 p-0 border-0 text-center" Placeholder="..."
+                       @bind="Job.Header"
+                       @bind:after="()=>Update(Job)" />
+            </div>
+
+            <hr class="my-0">
+        </div>
+
+        @ChildContent
+
+        <div>
+
+            <textarea class="form-control ps-1 lh-1 pe-1 pt-0 pb-0 m-0"
+                      rows="10"
+                      style="resize: none; font-size:10pt"
+                      @bind="Job.Mark"
+                      @bind:after="()=>Update(Job)"></textarea>
+
+            <hr class="my-2">
+
+            <div class="list-group-item d-flex align-items-center justify-content-between p-0 m-0 hover-bg-light">
+                <input class="form-control m-0 p-0 border-0 text-center fw-bold" Placeholder="..."
+                       @bind="Job.Footer"
+                       @bind:after="()=>Update(Job)" />
+            </div>
+        </div>
+
+
+    </div>
+</div>

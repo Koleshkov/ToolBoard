@@ -1,0 +1,36 @@
+﻿@if (IsVisible)
+{
+    <div class="modal-backdrop fade show position-fixed w-100 h-100"></div>
+
+    <div class="modal fade show d-flex justify-content-center" tabindex="-1" role="dialog" aria-labelledby="modalTitle">
+        <div class="modal-dialog modal-dialog-centered" style="width:400px" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Настройки</h5>
+                    <button type="button" class="btn-close" aria-label="Close" @onclick="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group mb-2">
+                        <h6>Загрузить данные из СР</h6>
+                        <InputFile class="form-control" OnChange="LoadFile" accept=".json"/>
+                    </div>
+                    <div class="form-group mb-2">
+                        <h6>Создать бэкап</h6>
+                        <button class="btn btn-primary"
+                                @onclick="SaveToJson">
+                            <i class="fas fa-save me-2"></i>Создать
+                        </button>
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <h6>Загрузить данные из бэкапа</h6>
+                        <InputFile class="form-control" OnChange="LoadFromJson" accept=".json"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ModalMessage @bind-IsVisible="isVisibleMessage" @bind-Message="message" @bind-MessageTitle="messageTitle" />
+}

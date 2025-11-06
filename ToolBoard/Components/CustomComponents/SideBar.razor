@@ -1,0 +1,44 @@
+﻿<div class="offcanvas offcanvas-start text-bg-dark @(IsVisible?"show":"hide")" style="width:280px">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Доски</h5>
+        <button type="button" class="btn-close btn-close-white" @onclick="Close"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-column">
+        <!-- Список досок -->
+        <div class="d-flex flex-column">
+            @foreach (var board in boardList)
+            {
+                <div class="btn-group">
+                    <a href="/@board.Id.ToString()" class="nav-link m-1 fw-bold text-wrap text-break @(SelectedBoardId==@board.Id.ToString()?"text-primary":"") " style="font-size:18px">@board.Name</a>
+                    <button type="button" class="nav-link dropdown-toggle dropdown-toggle-split @(SelectedBoardId==@board.Id.ToString()?"text-primary":"")" style="font-size:18px" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="visually-hidden">Переключатель выпадающего списка</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <button class="dropdown-item" @onclick="()=>{IsVisibleBoardForm=true;newBoard=board;}">
+                                <i class="fas fa-pen-to-square me-2"></i>Изменить
+                            </button>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <button class="dropdown-item text-danger" @onclick="() => RemoveBoard(board.Id)">
+                                <i class="fas fa-trash me-2"></i>Удалить
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+
+            }
+
+            <div class="text-center mt-auto py-3">
+                <a class="btn btn-link text-light border-0"
+                   @onclick="()=>{IsVisibleBoardForm=true;newBoard=new();}">
+                    <i class="fa-solid fa-plus fs-4"></i>
+                </a>
+            </div>
+        </div>
+        
+    </div>
+</div>
+<ModalBoardForm @bind-Isvisible="IsVisibleBoardForm" @bind-Board="newBoard" OnUpdateBoardList="UpdateBoardList"/>
+

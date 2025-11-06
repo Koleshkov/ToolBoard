@@ -1,0 +1,30 @@
+﻿@if (IsVisible)
+{
+    <div class="modal-backdrop fade show position-fixed w-100 h-100" ></div>
+
+    <div class="modal fade show d-flex justify-content-center" tabindex="-1" role="dialog" aria-labelledby="modalTitle">
+        <div class="modal-dialog modal-dialog-centered" style="width:300px" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Доска</h5>
+                    <button type="button" class="btn-close" aria-label="Close" @onclick="Close"></button>
+                </div>
+                <EditForm Model="Board" OnValidSubmit="AddBoard" autocomplete="off">
+                    <DataAnnotationsValidator />
+                    <div class="modal-body">
+                        <div class="form-group mb-2">
+                            <label>Название доски:</label>
+                            <ValidationMessage For="@(()=>Board.Name)" />
+                            <InputText class="form-control" Placeholder="Название доски"
+                                       @bind-Value="Board.Name" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" @onclick="Close">Отмена</button>
+                        <button type="submit" class="btn btn-primary">Добавить</button>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+}
